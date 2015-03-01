@@ -15,6 +15,7 @@
 #endif /* __cplusplus */
 
 #define c_int_vector__
+typedef int* iterator_int;
 typedef struct _c_int_vector c_int_vector;
 struct _c_int_vector{
 	int* array;
@@ -25,10 +26,12 @@ struct _c_int_vector{
 	c_int_vector(*assign)(size_t Count, int Val);
 	int(*at)(c_int_vector const* c_this, size_t place);
 	int(*back)(c_int_vector const* c_this);
-	int*(*begin)(c_int_vector const* c_this);
+	iterator_int(*begin)(c_int_vector const* c_this);
 	c_int_vector(*copy)(c_int_vector const* c_this);
 	void(*clear)(c_int_vector* c_this);
 	bool(*empty)(c_int_vector* c_this);
+	iterator_int(*end)(c_int_vector const* c_this);
+	void(*erase)(c_int_vector* c_this, int const* _Where);
 	size_t(*size)(c_int_vector const* c_this);
 	size_t(*max_size)(c_int_vector const* c_this);
 	size_t(*capacity)(c_int_vector const* c_this);
@@ -42,11 +45,13 @@ struct _c_int_vector{
 c_int_vector c_int_vector__ assign(size_t Count, int Val);
 int c_int_vector__ at(c_int_vector const* c_this, size_t place);
 int c_int_vector__ back(c_int_vector const* c_this);
-int* c_int_vector__ begin(c_int_vector const* c_this);
+iterator_int c_int_vector__ begin(c_int_vector const* c_this);
 size_t c_int_vector__ capacity(c_int_vector const* c_this);
 void c_int_vector__ clear(c_int_vector* c_this);
 c_int_vector c_int_vector__ copy(c_int_vector const* c_this);
 bool c_int_vector__ empty(c_int_vector const* c_this);
+iterator_int c_int_vector__ end(c_int_vector const* c_this);
+void c_int_vector__ erase(c_int_vector* c_this, int const* _Where);
 size_t c_int_vector__ size(c_int_vector const* c_this);
 size_t c_int_vector__ max_size(c_int_vector const* c_this);
 bool c_int_vector__ reserve(c_int_vector* c_this, size_t _Count);

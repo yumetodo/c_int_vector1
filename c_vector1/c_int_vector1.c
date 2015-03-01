@@ -15,7 +15,7 @@ int c_int_vector__ at(c_int_vector const* c_this, size_t place){
 int c_int_vector__ back(c_int_vector const* c_this){
 	return c_this->array[c_this->size(c_this) - 1];
 }
-int* c_int_vector__ begin(c_int_vector const* c_this){
+iterator_int c_int_vector__ begin(c_int_vector const* c_this){
 	return &(c_this->array[0]);
 }
 size_t c_int_vector__ capacity(c_int_vector const* c_this){
@@ -38,11 +38,43 @@ c_int_vector c_int_vector__ copy(c_int_vector const* c_this){
 bool c_int_vector__ empty(c_int_vector const* c_this){
 	return !(c_this->array_num);
 }
-int* c_int_vector__ end(c_int_vector const* c_this){
+iterator_int c_int_vector__ end(c_int_vector const* c_this){
 	return &(c_this->array[c_this->size(c_this) - 1]);
 }
-void c_int_vector__ erase(c_int_vector* c_this){
-
+void c_int_vector__ erase(c_int_vector* c_this, int const* _Where){
+	size_t i;
+	iterator_int it;
+	/* 一致するポインターを線形探索、減算命令だけで出来る・・・のかな？ */
+	for (it = c_this->begin(c_this), i = 0; it != _Where && it != c_this->end(c_this); it++, i++);
+	if (it == _Where){
+		if (_Where != c_this->end(c_this)){
+			/* 前に詰める */
+			memmove(&(c_this->array[i]), &(c_this->array[i + 1]), c_this->size(c_this) - 1 - i);
+		}
+		c_this->pop_back(c_this);/* 後ろを消去 */
+	}
+}
+void c_int_vector__ erase_by_range(c_int_vector* c_this, int const* _First, int const* _Last){
+	if (_First == c_this->end(c_this)){
+		c_this->pop_back(c_this);
+	}
+	else if (_First == _Last){
+		c_this->erase(c_this, _First);
+	}
+	else{
+		size_t i, j;
+		iterator_int it1;
+		for (it1 = c_this->begin(c_this), i = 0; it1 != _First && it1 != c_this->end(c_this); it1++, i++);
+		if (_Last == c_this->end(c_this)){
+			j = c_this->size(c_this) - 1;
+		}
+		else{
+			for (j = 0; it1 != _Last && it1 != c_this->end(c_this); it1++, j++);
+		}
+		/* 前に詰める */
+		memmove(&(c_this->array[i]), &(c_this->array[j]), c_this->size(c_this) - 1 - j);
+		c_this->resize(c_this, c_this->size(c_this) - 1 - j + i);/* 後ろを消去 */
+	}
 }
 size_t c_int_vector__ size(c_int_vector const* c_this){
 	return c_this->array_num;
