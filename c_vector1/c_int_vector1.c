@@ -1,12 +1,17 @@
 ﻿#include "c_int_vector.h"
 
-c_int_vector c_int_vector__ assign(size_t Count, int Val){
-	c_int_vector res = init_c_int_vector();
-	res.reserve(&res, Count * 2);
+void c_int_vector__ assign(c_int_vector const* c_this, size_t Count, int Val){
+	c_this->reserve(c_this, Count * 2);
 	for (int i = 0; i < Count; i++){
-		res.push_back(&res, Val);
+		c_this->push_back(c_this, Val);
 	}
-	return res;
+}
+void c_int_vector__ assign_by_array(c_int_vector const* c_this, iterator_int First, iterator_int Last){
+	iterator_int it;
+	for (it = First; it != Last; it++){
+		c_this->push_back(c_this, *it);
+	}
+	if (it == Last) c_this->push_back(c_this, *Last);
 }
 int c_int_vector__ at(c_int_vector const* c_this, size_t place){
 	if (c_this->size(c_this) - 1 < place) return INT_MAX;

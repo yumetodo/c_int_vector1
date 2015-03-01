@@ -23,7 +23,8 @@ struct _c_int_vector{
 	size_t array_capacity;
 	size_t array_max_num;
 
-	c_int_vector(*assign)(size_t Count, int Val);
+	void(*assign)(c_int_vector const* c_this, size_t Count, int Val);
+	void(*assign_by_array)(c_int_vector const* c_this, iterator_int First, iterator_int Last);
 	int(*at)(c_int_vector const* c_this, size_t place);
 	int(*back)(c_int_vector const* c_this);
 	iterator_int(*begin)(c_int_vector const* c_this);
@@ -32,6 +33,7 @@ struct _c_int_vector{
 	bool(*empty)(c_int_vector* c_this);
 	iterator_int(*end)(c_int_vector const* c_this);
 	void(*erase)(c_int_vector* c_this, int const* _Where);
+	void(*erase)(c_int_vector* c_this, int const* _First, int const* _Last);
 	size_t(*size)(c_int_vector const* c_this);
 	size_t(*max_size)(c_int_vector const* c_this);
 	size_t(*capacity)(c_int_vector const* c_this);
@@ -42,7 +44,8 @@ struct _c_int_vector{
 	void(*c_int_vector_sort)(c_int_vector* c_this);
 	size_t(*c_int_vector_bsearch)(c_int_vector* c_this, const int key);
 };
-c_int_vector c_int_vector__ assign(size_t Count, int Val);
+void c_int_vector__ assign(c_int_vector const* c_this, size_t Count, int Val);
+void c_int_vector__ assign_by_array(c_int_vector const* c_this, iterator_int First, iterator_int Last);
 int c_int_vector__ at(c_int_vector const* c_this, size_t place);
 int c_int_vector__ back(c_int_vector const* c_this);
 iterator_int c_int_vector__ begin(c_int_vector const* c_this);
@@ -52,6 +55,7 @@ c_int_vector c_int_vector__ copy(c_int_vector const* c_this);
 bool c_int_vector__ empty(c_int_vector const* c_this);
 iterator_int c_int_vector__ end(c_int_vector const* c_this);
 void c_int_vector__ erase(c_int_vector* c_this, int const* _Where);
+void c_int_vector__ erase_by_range(c_int_vector* c_this, int const* _First, int const* _Last);
 size_t c_int_vector__ size(c_int_vector const* c_this);
 size_t c_int_vector__ max_size(c_int_vector const* c_this);
 bool c_int_vector__ reserve(c_int_vector* c_this, size_t _Count);
