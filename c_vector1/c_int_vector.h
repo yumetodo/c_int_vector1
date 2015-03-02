@@ -1,4 +1,4 @@
-#ifndef _C_INT_VECTOR_H
+ï»¿#ifndef _C_INT_VECTOR_H
 #define _C_INT_VECTOR_H
 #if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
@@ -73,7 +73,7 @@ size_t c_int_vector__ size(c_int_vector const* c_this);
 void c_int_vector__ c_int_vector_sort(c_int_vector* c_this);
 size_t c_int_vector__ c_int_vector_bsearch(c_int_vector* c_this, const int key);
 
-/* ”ñƒƒ“ƒo[ŠÖ” */
+/* éãƒ¡ãƒ³ãƒãƒ¼é–¢æ•° */
 extern c_int_vector init_c_int_vector(void);
 extern c_int_vector new_c_int_vector(void);
 extern void delete_c_int_vector(c_int_vector* c_vector);

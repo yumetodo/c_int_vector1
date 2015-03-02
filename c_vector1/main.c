@@ -1,4 +1,4 @@
-#include "c_int_vector.h"
+ï»¿#include "c_int_vector.h"
 #include<errno.h>//in gcc
 
 void _rank(c_int_vector* rank, c_int_vector* in_num){
@@ -8,7 +8,7 @@ void _rank(c_int_vector* rank, c_int_vector* in_num){
 	for (i = 0; i < sorted.size(&sorted); i++){
 		rank_current = sorted.c_int_vector_bsearch(&sorted, in_num->array[i]);
 		int rank_true;
-		/* “¯‚¶”’l‚É‘Î‚µ‚Ä‚Í“¯‚¶‡ˆÊ‚Æ‚·‚é */
+		/* åŒã˜æ•°å€¤ã«å¯¾ã—ã¦ã¯åŒã˜é †ä½ã¨ã™ã‚‹ */
 		for (rank_true = rank_current; sorted.array[rank_true] == sorted.array[rank_true + 1]; rank_true++);
 		rank->push_back(rank, &rank_true);
 	}
@@ -16,14 +16,14 @@ void _rank(c_int_vector* rank, c_int_vector* in_num){
 }
 void print_array(c_int_vector* in_num, c_int_vector* rank){
 	size_t i;
-	puts("No.“ü—Í‡:”’l<‡ˆÊ>");
+	puts("No.å…¥åŠ›é †:æ•°å€¤<é †ä½>");
 	for (i = 0; i < in_num->size(in_num); i++)
 		printf("No. %d: %d<%d>\n", i + 1, in_num->array[i], rank->array[i]);
 }
 int get_integer_num(const int max, const int min){
-	/*‹@”\F•W€“ü—Í‚ğ”š‚É•ÏŠ·‚·‚éB
-	//ˆø”F–ß‚è’l‚ÌÅ‘å’l,–ß‚è’l‚ÌÅ¬’l
-	//–ß‚è’lF“ü—Í‚µ‚½”šAƒGƒ‰[‚ÍINT_MAX, EOF‚È‚çEOF*/
+	/*æ©Ÿèƒ½ï¼šæ¨™æº–å…¥åŠ›ã‚’æ•°å­—ã«å¤‰æ›ã™ã‚‹ã€‚
+	//å¼•æ•°ï¼šæˆ»ã‚Šå€¤ã®æœ€å¤§å€¤,æˆ»ã‚Šå€¤ã®æœ€å°å€¤
+	//æˆ»ã‚Šå€¤ï¼šå…¥åŠ›ã—ãŸæ•°å­—ã€ã‚¨ãƒ©ãƒ¼æ™‚ã¯INT_MAX, EOFãªã‚‰EOF*/
 	char s[100];
 	long t;
 	char *endptr;
@@ -44,7 +44,7 @@ int main(void){
 	c_int_vector in_num = new_c_int_vector();
 	int temp;
 	while (EOF != (temp = get_integer_num(INT_MAX, INT_MIN))){
-		if (INT_MAX == temp) continue;/*ƒGƒ‰[‘Îô*/
+		if (INT_MAX == temp) continue;/*ã‚¨ãƒ©ãƒ¼å¯¾ç­–*/
 		in_num.push_back(&in_num, &temp);
 	}
 	c_int_vector rank = new_c_int_vector();
