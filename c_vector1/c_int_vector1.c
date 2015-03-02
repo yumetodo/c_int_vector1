@@ -1,19 +1,19 @@
 ﻿#include "c_int_vector.h"
 
-void c_int_vector__ assign(c_int_vector const* c_this, size_t Count, int Val){
-	for (int i = 0; i < Count; i++){
+void c_int_vector__ assign(c_int_vector* c_this, size_t Count, int Val){
+	for (unsigned int i = 0; i < Count; i++){
 		/* 後ろにくっつけていく */
-		c_this->push_back(c_this, Val);
+		c_this->push_back(c_this, &Val);
 	}
 }
-void c_int_vector__ assign_by_array(c_int_vector const* c_this, iterator_int First, iterator_int Last){
+void c_int_vector__ assign_by_array(c_int_vector* c_this, iterator_int First, iterator_int Last){
 	iterator_int it;
 	for (it = First; it != Last; it++){
 		/* FirstからLastの一つ前の要素まで後ろにくっつける*/
-		c_this->push_back(c_this, *it);
+		c_this->push_back(c_this, it);
 	}
 	/* Lastを後ろにくっつける */
-	if (it == Last) c_this->push_back(c_this, *Last);
+	if (it == Last) c_this->push_back(c_this, Last);
 }
 int c_int_vector__ at(c_int_vector const* c_this, size_t place){
 	/* 範囲外じゃないかチェック */
@@ -158,6 +158,7 @@ bool c_int_vector__ reserve(c_int_vector* c_this, size_t _Count){
 		c_this->array = temp;
 		c_this->array_capacity = _Count;
 	}
+	return true;
 }
 bool c_int_vector__ resize(c_int_vector* c_this, const size_t Newsize){
 	const size_t old_size = c_this->size(c_this);
@@ -201,5 +202,54 @@ void c_int_vector__ c_int_vector_sort(c_int_vector* c_this){
 }
 size_t c_int_vector__ c_int_vector_bsearch(c_int_vector* c_this, const int key){
 	int const*result = (int*)bsearch(&key, c_this->array, c_this->array_num, sizeof(int), compare_int);
+	/* bsearchが失敗してわけわかめな値を返してくる */
 	return (size_t)(result - c_this->array);
+}
+
+/* 非メンバー関数 */
+c_int_vector init_c_int_vector(void){
+	c_int_vector res;
+	res.array_capacity = 0;
+	res.array_num = 0;
+	res.array_max_num = (1 << 30) - 1;
+
+	res.array = nullptr;
+
+	res.assign = &assign;
+	res.assign_by_array = &assign_by_array;
+	res.at = &at;
+	res.back = &back;
+	res.begin = &begin;
+	res.copy = &copy;
+	res.clear = &clear;
+	res.empty = &empty;
+	res.end = &end;
+	res.erase = &erase;
+	res.erase_by_range = &erase_by_range;
+	res.front = &front;
+	res.insert = &insert;
+	res.insert_nums = &insert_nums;
+	res.insert_array = &insert_array;
+	res.max_size = &max_size;
+	res.pop_back = &pop_back;
+	res.push_back = &push_back;
+	res.reserve = &reserve;
+	res.resize = &resize;
+	res.size = &size;
+	res.capacity = &capacity;
+	res.c_int_vector_sort = &c_int_vector_sort;
+	res.c_int_vector_bsearch = &c_int_vector_bsearch;
+	return res;
+}
+c_int_vector new_c_int_vector(void){
+	c_int_vector res = init_c_int_vector();
+	res.array_capacity = 15;
+	res.array = (int*)calloc(res.array_capacity, sizeof(int));
+	return res;
+}
+void delete_c_int_vector(c_int_vector* c_vector){
+	if (0 != c_vector->array_num && nullptr != c_vector->array){
+		free(c_vector->array);
+		c_vector->array_num = 0;
+	}
 }
