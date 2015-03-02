@@ -12,6 +12,7 @@ void _rank(c_int_vector* rank, c_int_vector* in_num){
 		for (rank_true = rank_current; sorted.array[rank_true] == sorted.array[rank_true + 1]; rank_true++);
 		rank->push_back(rank, &rank_true);
 	}
+	delete_c_int_vector(&sorted);
 }
 void print_array(c_int_vector* in_num, c_int_vector* rank){
 	size_t i;

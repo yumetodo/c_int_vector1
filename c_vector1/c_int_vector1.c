@@ -1,19 +1,22 @@
 ﻿#include "c_int_vector.h"
 
 void c_int_vector__ assign(c_int_vector const* c_this, size_t Count, int Val){
-	c_this->reserve(c_this, Count * 2);
 	for (int i = 0; i < Count; i++){
+		/* 後ろにくっつけていく */
 		c_this->push_back(c_this, Val);
 	}
 }
 void c_int_vector__ assign_by_array(c_int_vector const* c_this, iterator_int First, iterator_int Last){
 	iterator_int it;
 	for (it = First; it != Last; it++){
+		/* FirstからLastの一つ前の要素まで後ろにくっつける*/
 		c_this->push_back(c_this, *it);
 	}
+	/* Lastを後ろにくっつける */
 	if (it == Last) c_this->push_back(c_this, *Last);
 }
 int c_int_vector__ at(c_int_vector const* c_this, size_t place){
+	/* 範囲外じゃないかチェック */
 	if (c_this->size(c_this) - 1 < place) return INT_MAX;
 	return c_this->array[place];
 }
@@ -35,6 +38,7 @@ c_int_vector c_int_vector__ copy(c_int_vector const* c_this){
 	res.array = malloc(c_this->capacity(c_this) * sizeof(int));
 	memcpy(res.array, c_this->array, c_this->capacity(c_this));
 	res.array_num = c_this->array_num;
+	/* array_max_numは事実上のconstメンバーだからコピーしない */
 	/*res.array_max_num = c_this->array_max_num;*/
 	res.array_capacity = c_this->array_capacity;
 
@@ -61,19 +65,23 @@ void c_int_vector__ erase(c_int_vector* c_this, int const* _Where){
 }
 void c_int_vector__ erase_by_range(c_int_vector* c_this, int const* _First, int const* _Last){
 	if (_First == c_this->end(c_this)){
+		/* Case 1: _Firstが最終要素*/
 		c_this->pop_back(c_this);
 	}
 	else if (_First == _Last){
+		/* Case 2: _Firstと_Lastが同じ -> それ、eraseのお仕事だから*/
 		c_this->erase(c_this, _First);
 	}
 	else{
 		size_t i, j;
 		iterator_int it1;
+		/* _Firstと一致するポインターを線形探索 */
 		for (it1 = c_this->begin(c_this), i = 0; it1 != _First && it1 != c_this->end(c_this); it1++, i++);
 		if (_Last == c_this->end(c_this)){
 			j = c_this->size(c_this) - 1;
 		}
 		else{
+			/* _Lastと一致するポインターを線形探索 */
 			for (j = 0; it1 != _Last && it1 != c_this->end(c_this); it1++, j++);
 		}
 		/* 前に詰める */
