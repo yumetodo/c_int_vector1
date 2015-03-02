@@ -33,7 +33,7 @@ struct _c_int_vector{
 	bool(*empty)(c_int_vector* c_this);
 	iterator_int(*end)(c_int_vector const* c_this);
 	void(*erase)(c_int_vector* c_this, int const* _Where);
-	void(*erase)(c_int_vector* c_this, int const* _First, int const* _Last);
+	void(*erase_by_range)(c_int_vector* c_this, int const* _First, int const* _Last);
 	int(*front)(c_int_vector const* c_this);
 	iterator_int(*insert)(c_int_vector* c_this, const iterator_int _Where, int _Val);
 	void(*insert_nums)(c_int_vector* c_this, const iterator_int _Where, size_t _Count, int _Val);
