@@ -126,11 +126,19 @@ void c_int_vector__ insert_array(c_int_vector* c_this, const iterator_int _Where
 		}
 	}
 }
-size_t c_int_vector__ size(c_int_vector const* c_this){
-	return c_this->array_num;
-}
 size_t c_int_vector__ max_size(c_int_vector const* c_this){
 	return c_this->array_max_num;
+}
+bool c_int_vector__ pop_back(c_int_vector* c_this){
+	c_this->array[c_this->size(c_this) - 1] = 0;/* わざわざresizeを呼び出すまでもない */
+	c_this->array_num--;
+	return true;
+}
+bool c_int_vector__ push_back(c_int_vector* c_this, int const* val){
+	if (nullptr == val || false == c_this->resize(c_this, c_this->size(c_this) + 1))
+		return false;
+	c_this->array[c_this->size(c_this) - 1] = *val;
+	return true;
 }
 bool c_int_vector__ reserve(c_int_vector* c_this, size_t _Count){
 	const size_t old_size = c_this->size(c_this);
@@ -174,16 +182,8 @@ bool c_int_vector__ resize(c_int_vector* c_this, const size_t Newsize){
 	c_this->array_num = Newsize;
 	return true;
 }
-bool c_int_vector__ pop_back(c_int_vector* c_this){
-	c_this->array[c_this->size(c_this) - 1] = 0;/* わざわざresizeを呼び出すまでもない */
-	c_this->array_num--;
-	return true;
-}
-bool c_int_vector__ push_back(c_int_vector* c_this, int const* val){
-	if (nullptr == val || false == c_this->resize(c_this, c_this->size(c_this) + 1))
-		return false;
-	c_this->array[c_this->size(c_this) - 1] = *val;
-	return true;
+size_t c_int_vector__ size(c_int_vector const* c_this){
+	return c_this->array_num;
 }
 int compare_int(const void *a, const void *b){
 	return *(int*)a - *(int*)b;
