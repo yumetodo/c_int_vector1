@@ -81,6 +81,51 @@ void c_int_vector__ erase_by_range(c_int_vector* c_this, int const* _First, int 
 		c_this->resize(c_this, c_this->size(c_this) - 1 - j + i);/* 後ろを消去 */
 	}
 }
+int c_int_vector__ front(c_int_vector const* c_this){
+	return c_this->array[0];
+}
+iterator_int c_int_vector__ insert(c_int_vector* c_this, const iterator_int _Where, int _Val){
+	iterator_int it;
+	size_t i;
+	for (it = c_this->begin(c_this), i = 0; it != c_this->end(c_this) && it != _Where; it++, i++);
+	if (it == _Where){
+		c_this->push_back(c_this, 0);
+		memmove(&(c_this->array[i + 1]), &(c_this->array[i]), c_this->size(c_this) - 1 - i - 1);
+		c_this->array[i] = _Val;
+	}
+	return &(c_this->array[i]);
+}
+void c_int_vector__ insert_nums(c_int_vector* c_this, const iterator_int _Where, size_t _Count, int _Val){
+	iterator_int it;
+	size_t i;
+	for (it = c_this->begin(c_this), i = 0; it != c_this->end(c_this) && it != _Where; it++, i++);
+	const size_t old_size = c_this->size(c_this);
+	if (it == _Where){
+		const size_t new_size = old_size + _Count;
+		c_this->resize(c_this, new_size);
+		memmove(&(c_this->array[i + _Count]), &(c_this->array[i]), old_size - 1 - i);
+		size_t j;
+		for (j = i; j < _Count; j++){
+			c_this->array[j] = _Val;
+		}
+	}
+}
+void c_int_vector__ insert_array(c_int_vector* c_this, const iterator_int _Where, iterator_int _First, iterator_int _Last){
+	size_t i, _Count;
+	iterator_int it, it2;
+	for (it = c_this->begin(c_this), i = 0; it != c_this->end(c_this) && it != _Where; it++, i++);
+	for (it2 = _First, _Count = 1; it2 != _Last && _Count < SIZE_MAX; it2++, _Count++);
+	const size_t old_size = c_this->size(c_this);
+	if (it == _Where){
+		const size_t new_size = old_size + _Count;
+		c_this->resize(c_this, new_size);
+		memmove(&(c_this->array[i + _Count]), &(c_this->array[i]), old_size - 1 - i);
+		size_t j;
+		for (j = i; j < _Count; j++){
+			c_this->array[j] = _First[j];
+		}
+	}
+}
 size_t c_int_vector__ size(c_int_vector const* c_this){
 	return c_this->array_num;
 }
